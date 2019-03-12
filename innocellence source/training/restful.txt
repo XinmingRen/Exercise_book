@@ -1,0 +1,7 @@
+增加一个朋友，uri: generalcode.cn/v1/friends 接口类型：POST
+
+删除一个朋友，uri: generalcode.cn/va/friends 接口类型：DELETE
+
+修改一个朋友，uri: generalcode.cn/va/friends 接口类型：PUT
+
+查找朋友，uri: generalcode.cn/va/friends 接口类型：GET

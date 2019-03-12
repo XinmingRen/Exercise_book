@@ -1,0 +1,11 @@
+{
+  "extends": ["tslint:recommended", "tslint-eslint-rules"],
+  "rules": {
+    "ban-types": false,
+    "prefer-template": true,
+    "object-curly-spacing": true,
+    "max-line-length": false,
+    "no-namespace": false,
+    "unified-signatures": false
+  }
+}

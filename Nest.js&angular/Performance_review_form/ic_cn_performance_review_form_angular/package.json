@@ -1,0 +1,71 @@
+{
+  "name": "nest_angular_seed",
+  "version": "1.0.0",
+  "description": "nest angular seed",
+  "main": "./server/root.js",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "scripts": {
+    "start": "node ./server/root.js",
+    "debug-server": "nodemon --inspect=9999 index.js",
+    "debug-client": "cd client-src && npm run debug",
+    "build": "npm run build-server && npm run build-client",
+    "build-server": "tsc",
+    "build-client": "cd client-src && npm run build",
+    "lint": "npm run lint-server && npm run lint-client",
+    "lint-server": "tslint --project tsconfig.json --type-check --force",
+    "lint-client": "cd client-src && npm run lint"
+  },
+  "dependencies": {
+    "@nestjs/common": "^5.0.0",
+    "@nestjs/core": "^5.0.0",
+    "@nestjs/passport": "^5.0.0",
+    "@nestjs/typeorm": "^5.0.0",
+    "compression": "^1.7.2",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^6.0.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "express-http-context": "^1.2.0",
+    "express-session": "^1.15.6",
+    "helmet": "^3.12.1",
+    "lodash": "^4.17.10",
+    "log4js": "^3.0.6",
+    "mssql": "^4.1.0",
+    "nodemailer": "^4.6.5",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^6.3.3",
+    "typeorm": "^0.2.7",
+    "url-pattern": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/compression": "0.0.36",
+    "@types/cookie-parser": "^1.4.1",
+    "@types/dotenv": "^4.0.3",
+    "@types/ejs": "^2.6.0",
+    "@types/express": "^4.16.0",
+    "@types/express-session": "^1.15.10",
+    "@types/helmet": "0.0.38",
+    "@types/lodash": "^4.14.109",
+    "@types/log4js": "^2.3.5",
+    "@types/node": "^10.5.2",
+    "@types/nodemailer": "^4.6.5",
+    "@types/passport-local": "^1.0.33",
+    "nodemon": "^1.18.9",
+    "ts-node": "^6.1.0",
+    "tslint": "^5.10.0",
+    "tslint-eslint-rules": "^5.3.1",
+    "typescript": "~3.1.6"
+  },
+  "keywords": [
+    "node",
+    "typescript",
+    "nest",
+    "angular"
+  ],
+  "author": "adis.sun",
+  "license": "MIT"
+}

@@ -1,0 +1,98 @@
+<nz-table #roleTable [nzData]="roles" [nzHideOnSinglePage]="true">
+  <thead>
+    <tr>
+      <th>Role</th>
+      <th>Page</th>
+      <th>Comment</th>
+      <th>
+        <button nz-button [nzType]="'primary'" (click)="roleshowModal()">
+          <span>Add</span>
+        </button>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let role of roleTable.data">
+      <td>{{ role.name }}</td>
+      <td>
+        <span *ngFor="let page of role.pages">{{ page.name }} </span>
+      </td>
+      <td>{{ role.comment }}</td>
+      <td>
+        <button nz-button [nzType]="'primary'" (click)="roleshowModal(role)">
+          <span>Edit</span>
+        </button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-button nzType="danger" (click)="deleterole(role)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<nz-modal
+  [(nzVisible)]="roleVisible"
+  nzTitle="Role"
+  (nzOnCancel)="roleModalHide()"
+  (nzOnOk)="saveForm()"
+>
+  <!--输入框-->
+  <form
+    nz-form
+    [formGroup]="roleForm"
+    class="login-form"
+    (ngSubmit)="saveForm()"
+  >
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name"
+        >Name</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input
+            id="name"
+            type="text"
+            nz-input
+            formControlName="name"
+            placeholder="Username"
+          />
+        </nz-input-group>
+        <nz-form-explain
+          *ngIf="roleForm.get('name').dirty && roleForm.get('name').errors"
+          >Please input name!</nz-form-explain
+        >
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label
+        [nzRequired]="false"
+        [nzSm]="6"
+        [nzXs]="24"
+        nzRequired
+        nzFor="comment"
+        >comment</nz-form-label
+      >
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-input-group [nzPrefix]="prefixLock">
+          <textarea
+            rows="4"
+            nz-input
+            formControlName="comment"
+            type="text"
+          ></textarea>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">page</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24"
+        ><nz-checkbox-group
+          [(ngModel)]="savepage"
+          [ngModelOptions]="{ standalone: true }"
+        >
+        </nz-checkbox-group>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

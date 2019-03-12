@@ -1,0 +1,101 @@
+<div nz-row style="background: #f0f2f5;padding:10px 0">
+  <div nz-col nzSpan="2" nzOffset="20">
+    <button nz-button nzType="primary" nzBlock (click)="indexModalShow()">
+      Add
+    </button>
+  </div>
+</div>
+<div *ngFor="let role of roles" style="padding:24px">
+  <div nz-row *ngIf="role.indexs.length != 0">
+    <h3>{{ role.name }}考核指标</h3>
+    <nz-table [nzLoading]="indexesLoading" #indexTable [nzData]="role.indexs" [nzPageSize]="10" [nzHideOnSinglePage]="true">
+      <thead>
+        <tr>
+          <th width="110px">Item name</th>
+          <th>Description</th>
+          <th width="80px">Weight</th>
+          <th>Standard</th>
+          <th width="180px">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let index of indexTable.data">
+          <tr *ngIf="index.roleTemplateId == role.id">
+            <td>{{ index.name }}</td>
+            <td>{{ index.explain }}</td>
+            <td>{{ index.weight }}</td>
+            <td>{{ index.standard }}</td>
+
+            <td>
+              <button nz-button nzType="primary" (click)="indexModalShow(index)">
+                Edit
+              </button>
+              <nz-divider nzType="vertical"></nz-divider>
+              <button nz-button nzType="danger" (click)="deleteIndex(index)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<nz-modal [(nzVisible)]="indexVisible" nzTitle="Index Management" nzOkText="Save" nzCancelText="Cancel" (nzOnOk)="saveForm()"
+  (nzOnCancel)="indexModalHide()">
+  <form nz-form [formGroup]="indexForm" (submit)="saveForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Name</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="name" type="text" />
+        <nz-form-explain *ngIf="indexForm.get('name').dirty && indexForm.get('name').errors">
+          Please input index name!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Description</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="explain" type="text" />
+        <nz-form-explain *ngIf="
+            indexForm.get('explain').dirty && indexForm.get('explain').errors
+          ">
+          Please input index explain!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Weight</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="weight" type="text" />
+        <nz-form-explain *ngIf="
+            indexForm.get('weight').dirty && indexForm.get('weight').errors
+          ">
+          Please input index weight!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Standard</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="standard" type="text" />
+        <nz-form-explain *ngIf="
+            indexForm.get('standard').dirty && indexForm.get('standard').errors
+          ">
+          Please input index standard!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Role</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-radio-group formControlName="roleTemplateId">
+          <label nz-radio *ngFor="let role of roles" nzValue="{{ role.id }}">{{
+            role.name
+            }}</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>
+<nz-back-top></nz-back-top>

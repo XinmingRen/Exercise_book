@@ -1,0 +1,198 @@
+<div style="background: white;margin: 10px auto;min-height: 400px">
+  <div style="padding: 20px 0;" nz-row nzType="flex" nzJustify="space-around">
+    <div nz-col nzSpan="2" nzOffset="21" *ngIf="loginUserInfo.loginUserRole == 'HR'">
+      <button style="width:80px" nz-button [nzType]="'primary'" (click)="showModal()">
+        <span>+Add</span>
+      </button>
+      <nz-modal [nzWidth]="700" [(nzVisible)]="isVisible" nzTitle="Add Poject" nzOkText="Save" nzCancelText="Cancel"
+        (nzOnOk)="saveProject()" (nzOnCancel)="hideProjectModal()">
+        <!--添加项目信息及项目-->
+        <form nz-form [formGroup]="projectForm" (ngSubmit)="saveProject()">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="projectName">Project Name</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="projectName" id="projectName" />
+              <nz-form-explain *ngIf="
+                  projectForm.get('projectName').dirty &&
+                  projectForm.get('projectName').errors
+                ">Pleaese
+                input Project Name</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Start and stop time</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzXs]="24">
+              <nz-range-picker [nzFormat]="'yyyy/MM/dd'" nzShowTime formControlName="rangePickerTime"></nz-range-picker>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="buName">BU Name</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="buName" id="buName" />
+              <nz-form-explain *ngIf="
+                  projectForm.get('buName').dirty &&
+                  projectForm.get('buName').errors
+                ">Pleaese
+                input Bu Name</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="buHead">BU Head</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select style="width: 200px;" nzShowSearch nzAllowClear nzPlaceHolder="Select a Bu Head"
+                formControlName="buHead" id="buHead">
+                <nz-option *ngFor="let option of users" [nzLabel]="option.englishName" [nzValue]="option"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="pmName">PM</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select style="width: 200px;" nzShowSearch nzAllowClear nzPlaceHolder="Select a PM" formControlName="pmName"
+                id="pmName">
+                <nz-option *ngFor="let option of pmList" [nzLabel]="option.englishName" [nzValue]="option"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="hours">Hours</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="hours" id="hours" />
+              <nz-form-explain *ngIf="
+                  projectForm.get('hours').dirty &&
+                  projectForm.get('hours').errors
+                ">Pleaese
+                input hours</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- 循环roles -->
+          <nz-form-item *ngFor="let role of roles; let i; of: index">
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{
+              role.name
+              }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-select style="width: 100%" [formControlName]="role.name" nzMode="multiple" nzPlaceHolder="Please select {{ role.name }}">
+                <nz-option *ngFor="let option of workerList; let i; of: index" [nzLabel]="option.englishName" [nzValue]="option"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <!-- 结束循环roles -->
+        </form>
+        <!--表单结束-->
+      </nz-modal>
+    </div>
+  </div>
+
+  <nz-table #projectTable [nzLoading]="projectsLoading" [nzData]="projects" [nzPageSize]="10" [nzHideOnSinglePage]="true">
+    <!--项目信息-->
+    <thead>
+      <tr>
+        <th nzShowExpand></th>
+        <th>Project Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>BU</th>
+        <th>BU Head</th>
+        <th>PM</th>
+        <th>Project Hours</th>
+        <th *ngIf="loginUserInfo.loginUserRole == 'HR'">Operation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-data [ngForOf]="projectTable.data">
+        <tr>
+          <td nzShowExpand [(nzExpand)]="data.expand"></td>
+          <td>{{ data.name }}</td>
+          <td>{{ data.startDate }}</td>
+          <td>{{ data.endDate }}</td>
+          <td>{{ data.bu }}</td>
+          <td>{{ data.buHeader.englishName }}</td>
+          <td>{{ data.projectManager.englishName }}</td>
+          <td>{{ data.hours }}</td>
+          <td *ngIf="loginUserInfo.loginUserRole == 'HR'">
+            <button nz-button nzType="danger" (click)="deleteProject(data.id)">
+              Delete
+            </button>
+          </td>
+        </tr>
+        <tr [nzExpand]="data.expand">
+          <td></td>
+          <td colspan="12">
+            <nz-table #rowSelectionTable [nzData]="projects" [nzPageSize]="10" (nzPageIndexChange)="refreshStatus()"
+              (nzPageSizeChange)="refreshStatus()" [nzHideOnSinglePage]="true">
+              <!--项目下成员信息-->
+              <thead>
+                <tr>
+                  <th>Role Name</th>
+                  <th>Name</th>
+                  <th>Score</th>
+                  <th>Status</th>
+                  <th>Operation</th>
+                </tr>
+              </thead>
+    <tbody>
+      <!--Angular 项目下成员嵌套循环-->
+      <tr *ngFor="let performances of data.performances">
+        <td>{{ performances.role.name }}</td>
+        <td>{{ performances.user.englishName }}</td>
+        <td>
+          <div *ngIf="performances.score == null">——</div>
+          {{ performances.score }}
+        </td>
+        <td>{{ performances.statusName }}</td>
+        <!--向evaluate页面传performanceId -->
+        <td>
+          <a [routerLink]="[
+                        '/performance/evaluate/' + performances.id
+                      ]"
+            *ngIf="
+                        performances.status == '-99' &&
+                        loginUserInfo.loginUserRole == 'PM'
+                      ">
+            <button nz-button nzType="primary">Evaluate</button>
+          </a>
+          <div *ngIf="
+                        performances.status == '-99' &&
+                        (loginUserInfo.loginUserRole == 'Worker' ||
+                          loginUserInfo.loginUserRole == 'HR')
+                      ">
+            等待评价
+          </div>
+          <div *ngIf="
+                        performances.status == '0' &&
+                        (loginUserInfo.loginUserRole == 'PM' ||
+                          loginUserInfo.loginUserRole == 'HR')
+                      ">
+            等待确认
+          </div>
+          <a [routerLink]="[
+                        '/performance/evaluate/' + performances.id
+                      ]">
+            <button nz-button nzType="primary" *ngIf="
+                          performances.status == '0' &&
+                          loginUserInfo.loginUserRole == 'Worker'
+                        ">
+              Confirm
+            </button>
+          </a>
+          <a [routerLink]="[
+                        '/performance/evaluate/' + performances.id
+                      ]">
+            <button nz-button nzType="primary" *ngIf="performances.status == 99">
+              Read
+            </button>
+          </a>
+        </td>
+      </tr>
+      <!--成员循环结束-->
+    </tbody>
+  </nz-table>
+  </td>
+  </tr>
+  </ng-template>
+  <!--项目循环结束-->
+  </tbody>
+  </nz-table>
+  <nz-back-top></nz-back-top>
+</div>

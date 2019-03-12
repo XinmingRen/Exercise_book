@@ -1,0 +1,11 @@
+
+#container {
+  background-color: white;
+  height: 300px;
+  width: 400px;
+  border-radius: 10px;
+}
+
+#form {
+  margin: 80px 20px;
+}

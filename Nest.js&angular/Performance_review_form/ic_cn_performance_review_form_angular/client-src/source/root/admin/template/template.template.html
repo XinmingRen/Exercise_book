@@ -1,0 +1,99 @@
+<nz-table #templateTable [nzData]="templates" [nzLoading]="templatesLoading" [nzPageSize]="10" [nzHideOnSinglePage]="true">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Sender</th>
+      <th>Comment</th>
+      <th width="180px">
+        Action
+        <button nz-button nzType="primary" (click)="templateModalShow()">
+          Add
+        </button>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let template of templateTable.data">
+      <td>{{ template.code }}</td>
+      <td>{{ template.title }}</td>
+      <td>{{ template.content }}</td>
+      <td>{{ template.sender }}</td>
+      <td>{{ template.comment }}</td>
+      <td>
+        <button nz-button nzType="primary" (click)="templateModalShow(template)">
+          Edit
+        </button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-button nzType="danger" (click)="deleteTemplate(template)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<nz-modal [(nzVisible)]="templateVisible" nzTitle="Template Management" nzOkText="Save" nzCancelText="Cancel" (nzOnOk)="saveForm()"
+  (nzOnCancel)="templateModalHide()">
+  <form nz-form [formGroup]="templateForm" (submit)="saveForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Code</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="code" type="text" />
+        <nz-form-explain *ngIf="
+            templateForm.get('code').dirty && templateForm.get('code').errors
+          ">
+          Please input template code!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Title</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="title" type="text" />
+        <nz-form-explain *ngIf="
+            templateForm.get('title').dirty && templateForm.get('title').errors
+          ">
+          Please input template title!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">Content</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="content" type="text" />
+        <nz-form-explain *ngIf="
+            templateForm.get('content').dirty &&
+            templateForm.get('content').errors
+          ">
+          Please input template content!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Sender</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="sender" type="text" />
+        <nz-form-explain *ngIf="
+            templateForm.get('sender').dirty &&
+            templateForm.get('sender').errors
+          ">
+          Please input template sender!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">Comment</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <textarea rows="4" nz-input formControlName="comment" type="text"></textarea>
+        <nz-form-explain *ngIf="
+            templateForm.get('comment').dirty &&
+            templateForm.get('comment').errors
+          ">
+          Please input template comment!
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

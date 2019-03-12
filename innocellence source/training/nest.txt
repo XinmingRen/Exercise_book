@@ -1,0 +1,17 @@
+搭建nest工程
+nest.js	[按教程安装 就npm i @g...的那个]
+npm i安装 [dos或vscode里ctrl+~调出控制台里安装]
+
+vscode插件 
+1)EditorConfig for VS Code
+ 
+2)DotENV
+  
+3)Path Intellisense
+ 
+4)Prettier - Code formatter
+ 
+5)TSLint
+  
+6)TypeLens
+

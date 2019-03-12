@@ -1,0 +1,5 @@
+[
+  "Testcase_iDoctorMedicalQA.py::TestiDoctor_Login::()::test_iDoctorLogin",
+  "Testcase_iDoctorMedicalQA.py::TestiDoctor_Login::()::test_iDoctorGotoMedicalQAMainPage",
+  "Testcase_iDoctorMedicalQA.py::TestiDoctor_Login::()::test_iDoctorGoToSessionAndReply"
+]

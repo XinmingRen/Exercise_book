@@ -1,0 +1,40 @@
+Auto Import
+
+
+Auto Rename Tag
+
+
+Chinese (Simplified) Language Pack for Visual Studio Code
+
+
+DotENV
+
+
+EditorConfig for VS Code
+
+HTML Boilerplate
+
+
+Lodash Snippets
+
+
+open in browser
+
+
+Path Intellisense
+
+
+Prettier - Code formatter
+
+SQL Server (mssql)
+
+TSLint
+
+
+TypeLens
+
+
+TypeScript Import
+
+
+vscode-icons

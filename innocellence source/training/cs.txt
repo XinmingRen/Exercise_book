@@ -1,0 +1,102 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Reflection;
+
+namespace Console123
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+
+            var query = from s in stus
+                        join c in courses on s.StuId equals c.StuId
+                        where c.CourseName == "历史"
+                        select s.LastName;
+            foreach (var i in query)
+            {
+                Console.WriteLine("student taking history:{0}", i);
+
+            }
+           Type  tp= query.GetType();
+            //Type tt = typeof(int);
+            //FieidInfo[] infos= tp.GetFields();
+            MethodInfo[] mi = tp.GetMethods();
+            Console.Write(tp.Name);
+            Console.WriteLine(tp.Namespace);
+            foreach(var i in mi)
+            {
+                Console.Write("one of the methods is:"+i);
+            }
+            Console.WriteLine("********************************************");
+            string str = "yeah,i am waiting for you!";
+            int l=str.Length;
+            //string str1 = str.Concat("i love you");
+            Console.WriteLine("原串是：" + str);
+            Console.WriteLine(str.Contains("yeah")?"i miss you ":"i a waiting for you");
+            Console.WriteLine(str.ToUpper());
+            Console.WriteLine(str.Replace("i", "you"));
+            Console.WriteLine(str.Remove(20));//把指定位置索引的后面的都删掉
+            Console.WriteLine(str.Substring(3,20));
+            double cc = 888.546413251;
+            Console.WriteLine("|一共：{0,100}|",cc);
+            Console.WriteLine("|一共：{0,-100:c2}|",cc);
+            Console.WriteLine("{0:e3}",cc);
+            Console.WriteLine("{0:X}", cc);
+            Console.WriteLine("{0:n}", cc);
+            Console.WriteLine("the length of \"{0}\" is{1}",str, l);
+
+            StringBuilder sb = new StringBuilder("xiaoxiannv,you always in my heart");
+            Console.WriteLine("||||" + sb);
+            sb.Replace("you", "You");
+            Console.WriteLine(sb.ToString());
+            Console.WriteLine();
+            Console.ReadKey();
+    }
+
+
+        //*********************************************************
+        //linq 查询语句
+        /// <summary>
+        /// 学生类
+        /// </summary>
+        public class Student
+        {
+            public int StuId;
+            public string LastName;
+            public  void play(string ball)
+            {
+                Console.WriteLine("玩{0}",ball);
+            }
+            public int hobbies(params string[] a) {
+                int count = a.Length;               
+                return count;
+            }
+        }
+        /// <summary>
+        /// 课程类
+        /// </summary>
+        public class CourseStudent
+        {
+            public string CourseName;
+            public int StuId;
+        }
+        static CourseStudent[] courses = new CourseStudent[]
+        {
+        new CourseStudent {CourseName="历史",StuId=111 },
+        new CourseStudent {CourseName="物理",StuId=22 },
+        new CourseStudent {CourseName="english",StuId=234 },
+        new CourseStudent {CourseName="历史",StuId=00231 }
+        };
+        static Student[] stus = new Student[]{
+        new Student {LastName="jack",StuId=111 },
+        new Student {LastName="rose",StuId=00231 },
+        new Student {LastName="pack",StuId=321}
+};
+    
+    }
+}

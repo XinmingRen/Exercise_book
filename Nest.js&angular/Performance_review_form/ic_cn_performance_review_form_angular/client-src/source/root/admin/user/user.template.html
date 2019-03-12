@@ -1,0 +1,128 @@
+<nz-table #userTable [nzData]="users" [nzHideOnSinglePage]="true">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>avatar</th>
+      <th>email</th>
+      <th>lineManagerId</th>
+      <th>role</th>
+      <th>comment</th>
+      <th>
+        <button nz-button [nzType]="'primary'" (click)="usershowModal()">
+          <span>Add</span>
+        </button>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of userTable.data">
+      <td>{{ user.englishName }}</td>
+      <td>{{ user.avatar }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.lineManagerId }}</td>
+      <td>
+        <span *ngFor="let role of user.roles">{{ role.name }} </span>
+      </td>
+      <td>{{ user.comment }}</td>
+
+      <td>
+        <button nz-button [nzType]="'primary'" (click)="usershowModal(user)">
+          <span>Edit</span>
+        </button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-button nzType="danger" (click)="deleteuser(user)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<!--模态框-->
+
+<nz-modal [(nzVisible)]="userVisible" nzTitle="User" (nzOnCancel)="userModalHide()" (nzOnOk)="saveForm()">
+  <!--输入框-->
+  <form nz-form [formGroup]="userForm" class="login-form" (ngSubmit)="saveForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="username">username</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input type="text" nz-input formControlName="username" placeholder="Username" />
+        </nz-input-group>
+        <nz-form-explain *ngIf="
+            userForm.get('username').dirty && userForm.get('username').errors
+          ">Please
+          input username!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="password">password</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input type="password" nz-input formControlName="password" placeholder="Password" />
+        </nz-input-group>
+        <nz-form-explain *ngIf="
+            userForm.get('password').dirty && userForm.get('password').errors
+          ">Please
+          input userpasswordname!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzRequired]="false" [nzSm]="6" [nzXs]="24" nzRequired nzFor="englishName">englishName</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input type="text" nz-input formControlName="englishName" placeholder="EnglishName" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzRequired]="false" [nzSm]="6" [nzXs]="24" nzRequired nzFor="chinesehName">chinesehName</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input type="text" nz-input formControlName="chinesehName" placeholder="chinesehName" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzRequired]="false" [nzSm]="6" [nzXs]="24" nzRequired nzFor="avatar">avatar</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input type="text" nz-input formControlName="avatar" placeholder="Avatar" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">email</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input type="text" nz-input formControlName="email" placeholder="Email" />
+        </nz-input-group>
+        <nz-form-explain *ngIf="userForm.get('email').dirty && userForm.get('email').errors">The input is not valid
+          E-mail!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzRequired]="false" [nzSm]="6" [nzXs]="24" nzRequired nzFor="lineManagerId">lineManagerId</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-select style="width: 200px;" nzShowSearch nzAllowClear nzPlaceHolder="Select a lineManagerId"
+          formControlName="lineManagerId" id="lineManagerId">
+          <nz-option *ngFor="let option of users; let i; of: index" [nzLabel]="option.englishName" [nzValue]="option"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzRequired]="false" [nzSm]="6" [nzXs]="24" nzRequired nzFor="comment">comment</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-input-group [nzPrefix]="prefixLock">
+          <textarea rows="4" nz-input formControlName="comment" type="text"></textarea>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Role</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-checkbox-group [(ngModel)]="saverole" [ngModelOptions]="{ standalone: true }">
+        </nz-checkbox-group>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

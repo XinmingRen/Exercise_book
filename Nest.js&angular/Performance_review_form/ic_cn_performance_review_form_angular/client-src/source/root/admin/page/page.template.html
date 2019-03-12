@@ -1,0 +1,74 @@
+<nz-table #pageTable [nzData]="pages" [nzHideOnSinglePage]="true">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Url</th>
+      <th>Requests</th>
+      <th>Comment</th>
+      <th>
+        <button nz-button [nzType]="'primary'" (click)="pageshowModal()">
+          <span>Add</span>
+        </button>
+      </th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let page of pageTable.data">
+      <td>{{ page.name }}</td>
+      <td>{{ page.url }}</td>
+      <td>{{ page.requests }}</td>
+      <td>{{ page.comment }}</td>
+      <td>
+        <button nz-button [nzType]="'primary'" (click)="pageshowModal(page)">
+          <span>Edit</span>
+        </button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-button nzType="danger" (click)="deletepage(page)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<!--模态框-->
+
+<nz-modal [(nzVisible)]="pageVisible" nzTitle="Page" (nzOnCancel)="pageModalHide()" (nzOnOk)="saveForm()">
+  <!--输入框-->
+  <form nz-form [formGroup]="pageForm" class="login-form" (ngSubmit)="saveForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input type="text" nz-input formControlName="name" placeholder="Name" />
+        </nz-input-group>
+        <nz-form-explain *ngIf="pageForm.get('name').dirty && pageForm.get('name').errors">Please input name!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="url">url</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input type="text" nz-input formControlName="url" placeholder="Url" />
+        </nz-input-group>
+        <nz-form-explain *ngIf="pageForm.get('url').dirty && pageForm.get('url').errors">Please input url!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" [nzRequired]="false" nzFor="requests">requests</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-input-group [nzPrefix]="prefixUser">
+          <input type="text" nz-input formControlName="requests" placeholder="Requests" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="comment" [nzRequired]="false">comment</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-input-group [nzPrefix]="prefixLock">
+          <textarea rows="4" nz-input formControlName="comment" type="text"></textarea>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

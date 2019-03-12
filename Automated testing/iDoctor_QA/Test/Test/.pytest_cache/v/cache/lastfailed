@@ -1,0 +1,4 @@
+{
+  "Testcase_iDoctorMedicalQA.py::TestiDoctor_Login::()::test_iDoctorGoToSessionAndReply": true,
+  "Testcase_iDoctorMedicalQA.py::TestiDoctor_Login::()::test_iDoctorRepy": true
+}

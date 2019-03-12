@@ -1,0 +1,91 @@
+<div style="padding:24px">
+  <nz-table
+    #rateTable
+    [nzData]="rates"
+    [nzLoading]="ratesLoading"
+    [nzPageSize]="10"
+    [nzHideOnSinglePage]="true"
+  >
+    <thead>
+      <tr>
+        <th width="200px">Name</th>
+        <th width="80px">Rate</th>
+        <th>Comment</th>
+        <th width="180px">
+          Action
+          <button nz-button nzType="primary" (click)="rateModalShow()">
+            Add
+          </button>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rate of rateTable.data">
+        <td>{{ rate.name }}</td>
+        <td>{{ rate.rate }}</td>
+        <td>{{ rate.comment }}</td>
+        <td>
+          <button nz-button nzType="primary" (click)="rateModalShow(rate)">
+            Edit
+          </button>
+          <nz-divider nzType="vertical"></nz-divider>
+          <button nz-button nzType="danger" (click)="deleteRate(rate)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <nz-modal
+    [(nzVisible)]="rateVisible"
+    nzTitle="Rate Management"
+    nzOkText="Save"
+    nzCancelText="Cancel"
+    (nzOnOk)="saveForm()"
+    (nzOnCancel)="rateModalHide()"
+  >
+    <form nz-form [formGroup]="rateForm" (submit)="saveForm()">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Name</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="name" type="text" />
+          <nz-form-explain
+            *ngIf="rateForm.get('name').dirty && rateForm.get('name').errors"
+          >
+            Please input rate name!
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Rate</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input formControlName="rate" type="text" />
+          <nz-form-explain
+            *ngIf="rateForm.get('rate').dirty && rateForm.get('rate').errors"
+          >
+            Please input rate!
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24">Comment</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <textarea
+            rows="4"
+            nz-input
+            formControlName="comment"
+            type="text"
+          ></textarea>
+          <nz-form-explain
+            *ngIf="
+              rateForm.get('comment').dirty && rateForm.get('comment').errors
+            "
+          >
+            Please input rate comment!
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-modal>
+  <nz-back-top></nz-back-top>
+</div>

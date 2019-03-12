@@ -1,0 +1,20 @@
+<nz-layout>
+  <nz-sider [nzWidth]="200" style="background:#fff;height:100vh;">
+    <ul nz-menu [nzMode]="'inline'" style="height:100%">
+      <li nz-menu-item routerLinkActive="ant-menu-item-selected">
+        <a routerLink="/performance/configurations/roles">Role Management</a>
+      </li>
+      <li nz-menu-item routerLinkActive="ant-menu-item-selected">
+        <a routerLink="/performance/configurations/indexes">Index Management</a>
+      </li>
+      <li nz-menu-item routerLinkActive="ant-menu-item-selected">
+        <a routerLink="/performance/configurations/rates">Rate Management</a>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout style="padding:0 5px;margin: 10px auto;">
+    <nz-content style="background:#fff;min-height: 400px">
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
